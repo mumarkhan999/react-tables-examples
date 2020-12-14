@@ -1,22 +1,22 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-const Modal = ({ isShowing, hide }) => isShowing ? ReactDOM.createPortal(
-  <React.Fragment>
-    <div className="modal-overlay"/>
-    <div className="modal-wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog">
-      <div className="modal">
-        <div className="modal-header">
-          <button type="button" className="modal-close-button" data-dismiss="modal" aria-label="Close" onClick={hide}>
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <p>
-          Hello, I'm a modal.
-        </p>
-      </div>
+const Modal = ({ handleClose, show, values }) => {
+  const showHideClassName = show ? "my-modal display-block" : "my-modal display-none";
+
+  return (
+    <div className={showHideClassName}>
+      <section className="modal-main">
+        <p>Catalog Name: <span>{values.catalog_name}</span></p>
+        <p>Catalog Type: <span>{values.type}</span></p>
+        <p>Site: <span>{values.site}</span></p>
+        <p>Course:</p>
+        <select>
+
+        </select>
+        <button type="button" className="btn btn-primary" onClick={handleClose}>close</button>
+      </section>
     </div>
-  </React.Fragment>, document.body
-) : null;
+  );
+};
 
-export default Modal;
+export default Modal

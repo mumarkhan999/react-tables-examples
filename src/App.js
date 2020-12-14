@@ -1,33 +1,31 @@
 // App.js
-import React from 'react';
-import './App.css';
-import {
-  BrowserRouter as Router,
-  Link,
-  Route,
-  Switch,
-} from 'react-router-dom';
-import FilterTableComponent from './components/filter.table';
+import React from "react";
+import "./App.css";
+import Modal from "./components/Modal";
+import FilterTableComponent from "./components/filter.table";
 
-function App() {
+class App extends React.Component {
+  state = { show: false, values: [] };
+  showModal = (values) => {
+    this.setState({ show: true, values });
 
-  return (
-    <Router>
-    <div className="App">
+  };
 
+  hideModal = () => {
+    this.setState({ show: false });
+  };
 
-
-
-
-      <h3>Filter Table using <code>react-table</code></h3>
-
-      <FilterTableComponent />
-
-
-
+  render() {
+    return (
+      <div className="App">
+        <Modal show={this.state.show} values={this.state.values} handleClose={this.hideModal}></Modal>
+        <h3>
+          Filter Table using <code>react-table</code>
+        </h3>
+        <FilterTableComponent modalHandler={this.showModal} />
       </div>
-    </Router>
-  );
+    );
+  }
 }
 
 export default App;

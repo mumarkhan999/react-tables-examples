@@ -1,8 +1,5 @@
 // src/components/filter.table.js
 import React from "react";
-import Modal from "./Modal";
-import useModal from './useModal';
-
 
 import { useTable, useGlobalFilter, useAsyncDebounce } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -96,10 +93,16 @@ function Table({ columns, data }) {
   );
 }
 
-function FilterTableComponent() {
+function FilterTableComponent({modalHandler}) {
 
   var handleClick = (values) => {
       alert('You have clicked this button. ' + values.catalog_name + " " + values.catalog_type + " " + values.site + " " + values.course)
+  }
+
+  var modalHandlerWrapper = (values) => {
+    var filtered_data = data.filter(i => (i.catalog_name === values.catalog_name))
+    values.course =  filtered_data.map(i => i.course)
+    modalHandler(values);
   }
 
   const columns = React.useMemo(
@@ -125,7 +128,7 @@ function FilterTableComponent() {
             accessor: "action",
             Cell: ({ cell }) => (
                 <div>
-                    <button value={cell.row.values.catalog_name} onClick={() => handleClick(cell.row.values)}>
+                    <button value={cell.row.values.catalog_name} onClick={() => modalHandlerWrapper(cell.row.values)}>
                     Edit {cell.row.values.catalog_name}
                     </button> {" "}
                     <button value={cell.row.values.catalog_name} onClick={() => handleClick(cell.row.values)}>
