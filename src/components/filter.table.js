@@ -98,7 +98,6 @@ function Table({ columns, data }) {
 
 function FilterTableComponent() {
 
-  const {isShowing, toggle} = useModal();
   var handleClick = (values) => {
       alert('You have clicked this button. ' + values.catalog_name + " " + values.catalog_type + " " + values.site + " " + values.course)
   }
@@ -126,7 +125,7 @@ function FilterTableComponent() {
             accessor: "action",
             Cell: ({ cell }) => (
                 <div>
-                    <button value={cell.row.values.catalog_name} onClick={toggle}>
+                    <button value={cell.row.values.catalog_name} onClick={() => handleClick(cell.row.values)}>
                     Edit {cell.row.values.catalog_name}
                     </button> {" "}
                     <button value={cell.row.values.catalog_name} onClick={() => handleClick(cell.row.values)}>
@@ -202,10 +201,6 @@ function FilterTableComponent() {
 
   return (
     <>
-        <Modal
-            isShowing={isShowing}
-            hide={toggle}
-        />
         <Table columns={columns} data={data} />
     </>
   );
