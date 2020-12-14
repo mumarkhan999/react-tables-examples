@@ -1,15 +1,18 @@
 // App.js
 import React from 'react';
 import './App.css';
-import BasicTableComponent from './components/basic.table';
+import {
+  BrowserRouter as Router,
+  Link,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import FilterTableComponent from './components/filter.table';
-import PaginationTableComponent from './components/pagination.table';
-import SortingTableComponent from './components/sorting.table';
-import ExpandableTableComponent from './components/expandable.table';
 
 function App() {
 
   return (
+    <Router>
     <div className="App">
 
 
@@ -22,7 +25,8 @@ function App() {
 
 
 
-    </div>
+      </div>
+    </Router>
   );
 }
 

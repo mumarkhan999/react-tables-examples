@@ -1,5 +1,8 @@
 // src/components/filter.table.js
 import React from "react";
+import Modal from "./Modal";
+import useModal from './useModal';
+
 
 import { useTable, useGlobalFilter, useAsyncDebounce } from "react-table";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -94,73 +97,118 @@ function Table({ columns, data }) {
 }
 
 function FilterTableComponent() {
+
+  const {isShowing, toggle} = useModal();
+  var handleClick = (values) => {
+      alert('You have clicked this button. ' + values.catalog_name + " " + values.catalog_type + " " + values.site + " " + values.course)
+  }
+
   const columns = React.useMemo(
     () => [
-      {
-        Header: "First Name",
-        accessor: "firstName",
-      },
-      {
-        Header: "Last Name",
-        accessor: "lastName",
-      },
-
-      {
-        Header: "Age",
-        accessor: "age",
-      },
-      {
-        Header: "Visits",
-        accessor: "visits",
-      },
-      {
-        Header: "Status",
-        accessor: "status",
-      },
-      {
-        Header: "Profile Progress",
-        accessor: "progress",
-      },
+        {
+            Header: "Catalog Name",
+            accessor: "catalog_name",
+        },
+        {
+            Header: "Catalog Type",
+            accessor: "catalog_type",
+        },
+        {
+            Header: "Linked Site",
+            accessor: "site",
+        },
+        {
+            Header: "Included Course",
+            accessor: "course",
+        },
+        {
+            Header: "Actions",
+            accessor: "action",
+            Cell: ({ cell }) => (
+                <div>
+                    <button value={cell.row.values.catalog_name} onClick={toggle}>
+                    Edit {cell.row.values.catalog_name}
+                    </button> {" "}
+                    <button value={cell.row.values.catalog_name} onClick={() => handleClick(cell.row.values)}>
+                    Delete {cell.row.values.catalog_name}
+                    </button>
+                </div>
+              )
+        },
     ],
     []
   );
 
   const data = [
-    {
-      firstName: "horn-od926",
-      lastName: "selection-gsykp",
-      age: 22,
-      visits: 20,
-      progress: 39,
-      status: "single",
-    },
-    {
-      firstName: "heart-nff6w",
-      lastName: "information-nyp92",
-      age: 16,
-      visits: 98,
-      progress: 40,
-      status: "complicated",
-    },
-    {
-      firstName: "minute-yri12",
-      lastName: "fairies-iutct",
-      age: 7,
-      visits: 77,
-      progress: 39,
-      status: "single",
-    },
-    {
-      firstName: "degree-jx4h0",
-      lastName: "man-u2y40",
-      age: 27,
-      visits: 54,
-      progress: 92,
-      status: "relationship",
-    },
+      {
+        "catalog_name": "Catalog 1",
+        "type": "public",
+        "site": "none",
+        "course": "A",
+        "action": "Add"
+      },
+      {
+        "catalog_name": "Catalog 1",
+        "type": "Public",
+        "site": "none",
+        "course": "B",
+        "action": "Add"
+      },
+      {
+        "catalog_name": "Catalog 2",
+        "type": "public",
+        "site": "none",
+        "course": "F",
+        "action": "Delete"
+      },
+      {
+        "catalog_name": "Catalog 3",
+        "type": "public",
+        "site": "blackhills",
+        "course": "A",
+        "action": "Add"
+      },
+      {
+        "catalog_name": "Catalog 3",
+        "type": "local",
+        "site": "blackhills",
+        "course": "A course",
+        "action": "Add"
+      },
+      {
+        "catalog_name": "Catalog 3",
+        "type": "local",
+        "site": "blackhills",
+        "course": "C",
+        "action": "Add"
+      },
+      {
+        "catalog_name": "Catalog 4",
+        "type": "local",
+        "site": "redhouse",
+        "course": "D",
+        "action": "Add"
+      },
+      {
+        "catalog_name": "Catalog 4",
+        "type": "local",
+        "site": "redhouse",
+        "course": "A",
+        "action": "Add"
+      },
+
+
   ];
 
-  return <Table columns={columns} data={data} />;
+  return (
+    <>
+        <Modal
+            isShowing={isShowing}
+            hide={toggle}
+        />
+        <Table columns={columns} data={data} />
+    </>
+  );
 }
 
 export default FilterTableComponent;
